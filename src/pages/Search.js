@@ -6,6 +6,7 @@ var styles = require('../pages/styles');
 import LazyImage from '../components/LazyImage';
 import api from '../services/api';
 import { Post, Header, Avatar, Name, Description } from '../components/Search/styled';
+import SearchBar from 'react-native-search-bar';
 
 
 const { width } = Dimensions.get("window");
@@ -166,6 +167,13 @@ export default function Search() {
                                 onChangeText={search.bind(this)}
                                 placeholder="Search..."
                             />
+                    <SearchBar
+                        ref="searchBar"
+                        placeholder="Search"
+                        onChangeText={...}
+                        onSearchButtonPress={...}
+                        onCancelButtonPress={...}
+                    />
                         </Animated.View>
 
                         <AnimatedTouchable
