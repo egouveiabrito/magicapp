@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import api from '../services/api';
 import { View, Text, TouchableOpacity, TextInput, Dimensions, Animated, FlatList } from 'react-native';
-const { width } = Dimensions.get("window");
+
+
 var styles = require('../pages/styles');
-
 import LazyImage from '../components/LazyImage';
-import { Post, Header, Avatar, Name } from '../components/Search/styled';
+import api from '../services/api';
+import { Post, Header, Avatar, Name, Description } from '../components/Search/styled';
 
 
+const { width } = Dimensions.get("window");
 const PADDING = 16;
 const SEARCH_FULL_WIDTH = width - PADDING * 2; //search_width when unfocused
 const SEARCH_SHRINK_WIDTH = width - PADDING - 90; //search_width when focused
@@ -30,6 +31,9 @@ export default function Search() {
         useEffect(() => { loadPage() }, []);
 
         function validadeJson(Info){
+
+        if(docs.length > 500) return;
+            
         try {
             var Cards = new Array();
             for (let index = 0; index < Info.data.length; index++) {
@@ -41,7 +45,8 @@ export default function Search() {
                     description: Info.data[index].oracle_text
                 });
             }
-           return Cards;
+
+            return Cards;
 
         } catch (error) {
             console.log(error);
@@ -58,7 +63,7 @@ export default function Search() {
             try {
                 const response = await api.get('/cards?page=' + page);
                 const data = validadeJson(response.data);
-
+                
                 setLoading(false);
                 setTotal(Math.floor(data.length / 4));
                 setPage(pageNumber + 1);
@@ -159,7 +164,7 @@ export default function Search() {
                                 onBlur={onBlur}
                                 onFocus={onFocus}
                                 onChangeText={search.bind(this)}
-                                placeholder="Type something"
+                                placeholder="Search..."
                             />
                         </Animated.View>
 
@@ -195,14 +200,15 @@ export default function Search() {
                                 <Avatar source={{ uri: item.url }} />
                                 <Name>{item.title}</Name>
                             </Header>
-                        
-              
                             <LazyImage 
                                 aspectRatio={0.834}
                                 shouldLoad={viewable.includes(item._id)}
                                 smallSource={{ uri: item.url }}
                                 source={{ uri: item.url }}
                             />   
+                                <Description>
+                                    <Text>{item.description}</Text>
+                                </Description>
 
                              <View>
                                     <TouchableOpacity  

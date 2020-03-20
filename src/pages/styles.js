@@ -12,9 +12,9 @@ module.exports = StyleSheet.create({
 
   Search: {
     flexDirection: "row",
-    height: 72,
+    height: 50,
     borderBottomColor: "#fff",
-    paddingTop: 100
+    paddingTop: 50,
   },
 
   Post: {
@@ -23,6 +23,7 @@ module.exports = StyleSheet.create({
     padding: 20,
     flex: 1,
     marginBottom: 20,
+    backgroundColor:'#f8f8ff'
   },
 
   
